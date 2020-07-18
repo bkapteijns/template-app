@@ -1,0 +1,79 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const Nav = () => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+  return (
+    <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <div className="navbar-header">
+        <Link className="navbar-brand" to={{ pathname: "/" }}>
+          Template
+        </Link>
+      </div>
+      <div
+        className="container-fluid collapse navbar-collapse"
+        id="navbarSupportedContent"
+      >
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/about">
+              About
+            </Link>
+          </li>
+          <li className="nav-item dropdown">
+            {isAuthenticated ? (
+              <>
+                <div
+                  className="dropdown-toggle nav-link"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Profile
+                </div>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuLink"
+                >
+                  <Link className="dropdown-item" to="/profile">
+                    Dashboard
+                  </Link>
+                  <Link className="dropdown-item" to="/">
+                    Another action
+                  </Link>
+                  <div className="dropdown-divider" />
+                  <button
+                    className="dropdown-item"
+                    type="button"
+                    onClick={isAuthenticated ? logout : loginWithRedirect}
+                  >
+                    {isAuthenticated ? "Log Out" : "Log In"}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <button
+                className="btn btn-dark nav-link"
+                type="button"
+                onClick={loginWithRedirect}
+              >
+                Log In
+              </button>
+            )}
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Nav;
