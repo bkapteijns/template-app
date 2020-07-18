@@ -3,7 +3,8 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import Nav from "./Nav";
 import Home from "./Home";
-import About from "./About";
+import Public from "./Public";
+import Private from "./Private";
 import Profile from "./Profile";
 
 function App() {
@@ -11,7 +12,8 @@ function App() {
     <BrowserRouter>
       <Nav />
       <Route exact path="/" render={() => <Home />} />
-      <Route exact path="/about" render={() => <About />} />
+      <Route exact path="/public" render={() => <Public />} />
+      <Route exact path="/private" render={() => <Private />} />
       <Route exact path="/profile" render={() => <Profile />} />
     </BrowserRouter>
   );

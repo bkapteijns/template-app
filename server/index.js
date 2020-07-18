@@ -31,13 +31,13 @@ function checkRole(role) {
   };
 }
 
-app.use("/public", publicRouter);
+app.use("/api/public", publicRouter);
 
-app.use("/private", checkJwt, privateRouter);
+app.use("/api/private", checkJwt, privateRouter);
 
-app.use("/admin", checkJwt, checkRole("admin"), adminRouter);
+app.use("/api/admin", checkJwt, checkRole("admin"), adminRouter);
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Welcome to my api");
 });
 

@@ -23,8 +23,8 @@ const Nav = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/about">
-              About
+            <Link className="nav-link" to="/public">
+              Public
             </Link>
           </li>
           <li className="nav-item dropdown">
@@ -47,22 +47,22 @@ const Nav = () => {
                   <Link className="dropdown-item" to="/profile">
                     Dashboard
                   </Link>
-                  <Link className="dropdown-item" to="/">
-                    Another action
+                  <Link className="dropdown-item" to="/settings">
+                    Settings
                   </Link>
                   <div className="dropdown-divider" />
                   <button
                     className="dropdown-item"
                     type="button"
-                    onClick={isAuthenticated ? logout : loginWithRedirect}
+                    onClick={logout}
                   >
-                    {isAuthenticated ? "Log Out" : "Log In"}
+                    Log Out
                   </button>
                 </div>
               </>
             ) : (
               <button
-                className="btn btn-dark nav-link"
+                className="btn nav-link"
                 type="button"
                 onClick={loginWithRedirect}
               >
