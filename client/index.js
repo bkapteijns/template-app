@@ -11,7 +11,7 @@ ReactDOM.render(
     domain="dev-g9blhnj8.eu.auth0.com"
     clientId="PuxEFXXtq4RzYZkHbqzi16g1akqhRQBV"
     redirectUri="http://localhost:3000/profile"
-    audience="http://dev-g9blhnj8.eu.auth0.com/api/v2/"
+    audience="https://dev-g9blhnj8.eu.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata"
     useRefreshTokens
   >
