@@ -1,19 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { get } from "axios";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { useAuth0 } from "@auth0/auth0-react";
+import PropTypes from "prop-types";
 
-const Private = () => {
-  const [data, setData] = useState(null);
+import { getData } from "../redux/actions/dataActions";
 
-  useEffect(async () => {
-    try {
-      const response = await get("http://localhost:3001/api/private");
-      setData(response);
-    } catch (err) {
-      console.log(err);
-    }
+const Private = ({ data, error, actions }) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  useEffect(() => {
+    if (!data) actions.getData("private", getAccessTokenSilently);
   }, []);
 
-  return data ? <div>{data}</div> : <div>Private</div>;
+  return data ? (
+    <div>{data}</div>
+  ) : (
+    <div>
+      <p>Private</p>
+      <p>{error.message}</p>
+    </div>
+  );
 };
 
-export default Private;
+Private.propTypes = {
+  data: PropTypes.any,
+  error: PropTypes.any,
+  actions: PropTypes.array.isRequired
+};
+
+Private.defaultProps = {
+  data: null,
+  error: { message: "Error" }
+};
+
+function mapStateToProps(state) {
+  return {
+    data: state.privateData,
+    error: state.data.errorData
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      getData: bindActionCreators(getData, dispatch)
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Private);

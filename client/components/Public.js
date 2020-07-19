@@ -1,5 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import PropTypes from "prop-types";
 
-const Public = () => <div>Public</div>;
+import { getData } from "../redux/actions/dataActions";
 
-export default Public;
+const Public = ({ data, error, actions }) => {
+  useEffect(() => {
+    if (!data) actions.getData("public");
+  }, []);
+
+  return data ? (
+    <div>{data}</div>
+  ) : (
+    <div>
+      <p>Public</p>
+      <p>{error.message}</p>
+    </div>
+  );
+};
+
+Public.propTypes = {
+  data: PropTypes.any,
+  error: PropTypes.any,
+  actions: PropTypes.array.isRequired
+};
+
+Public.defaultProps = {
+  data: null,
+  error: { message: "Error" }
+};
+
+function mapStateToProps(state) {
+  return {
+    data: state.data.publicData,
+    error: state.data.errorData
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      getData: bindActionCreators(getData, dispatch)
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Public);
