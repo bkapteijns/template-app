@@ -27,6 +27,11 @@ const Nav = () => {
               Public
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/private">
+              Private
+            </Link>
+          </li>
           <li className="nav-item dropdown">
             {isAuthenticated ? (
               <>

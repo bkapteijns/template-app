@@ -1,5 +1,4 @@
 const express = require("express");
-const checkScope = require("express-jwt-authz");
 
 const PrivateController = require("../controllers/privateController");
 

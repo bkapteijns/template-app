@@ -1,40 +1,18 @@
 const express = require("express");
 require("dotenv").config();
-const jwt = require("express-jwt");
-const jwksRsa = require("jwks-rsa");
+
+const { checkJwt, checkScope, checkRole } = require("./authZero");
 
 const publicRouter = require("./routes/publicRoutes")();
 const privateRouter = require("./routes/privateRoutes")();
+const scopedRouter = require("./routes/scopedRouter");
 const adminRouter = require("./routes/adminRoutes")();
-
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/.well-known/jwks.json`
-  }),
-  audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-  issuer: `https://${process.env.REACT_APP_AUTH0_DOMAIN}/`,
-  algorithms: ["RS256"]
-});
 
 const app = express();
 
-function checkRole(role) {
-  return (req, res, next) => {
-    const assignedRoles = req.user["http://localhost:3000/roles"];
-    if (Array.isArray(assignedRoles) && assignedRoles.includes(role)) {
-      return next();
-    }
-    return res.status(401).send("Insufficient role");
-  };
-}
-
 app.use("/api/public", publicRouter);
-
 app.use("/api/private", checkJwt, privateRouter);
-
+app.use("/api/scoped", checkJwt, checkScope, scopedRouter);
 app.use("/api/admin", checkJwt, checkRole("admin"), adminRouter);
 
 app.get("/api", (req, res) => {
