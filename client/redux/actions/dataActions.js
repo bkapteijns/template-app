@@ -44,11 +44,15 @@ export function getData(availability, getAccessTokenSilently) {
       let accessToken = null;
 
       if (getAccessTokenSilently) {
-        accessToken = await getAccessTokenSilently({
+        const token = await getAccessTokenSilently({
           audience: `https://dev-g9blhnj8.eu.auth0.com/api/v2`,
-          scope: "read:posts"
+          scope: ""
         });
+
+        accessToken = token;
       }
+
+      debugger;
 
       const response = await axios.get(
         `http://localhost:3001/api/${availability}`,

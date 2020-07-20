@@ -23,7 +23,7 @@ const Public = ({ data, error, actions }) => {
 Public.propTypes = {
   data: PropTypes.any,
   error: PropTypes.any,
-  actions: PropTypes.array.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 Public.defaultProps = {

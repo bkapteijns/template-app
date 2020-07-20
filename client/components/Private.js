@@ -26,7 +26,7 @@ const Private = ({ data, error, actions }) => {
 Private.propTypes = {
   data: PropTypes.any,
   error: PropTypes.any,
-  actions: PropTypes.array.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 Private.defaultProps = {
