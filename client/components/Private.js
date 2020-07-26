@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { useAuth0 } from "@auth0/auth0-react";
 import PropTypes from "prop-types";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { getData } from "../redux/actions/dataActions";
 
@@ -36,7 +36,7 @@ Private.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    data: state.privateData,
+    data: state.data.privateData,
     error: state.data.errorData
   };
 }

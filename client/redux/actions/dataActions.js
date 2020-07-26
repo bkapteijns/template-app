@@ -8,7 +8,6 @@ import {
 } from "./actionTypes";
 
 export function getDataSuccess(payload, availability) {
-  debugger;
   let type = "";
   switch (availability) {
     case "private":
@@ -27,42 +26,37 @@ export function getDataSuccess(payload, availability) {
 }
 
 export function getDataFailure(err) {
-  debugger;
   return { type: GET_DATA_FAILURE, payload: err };
 }
 
 export function requestData() {
-  debugger;
   return { type: GET_DATA_REQUEST };
 }
 
 export function getData(availability, getAccessTokenSilently) {
-  debugger;
   return async (dispatch) => {
     dispatch(requestData());
     try {
-      let accessToken = null;
-
       if (getAccessTokenSilently) {
-        const token = await getAccessTokenSilently({
-          audience: `https://dev-g9blhnj8.eu.auth0.com/api/v2`,
-          scope: ""
+        const accessToken = await getAccessTokenSilently({
+          audience: `https://dev-g9blhnj8.eu.auth0.com/api/v2/`
         });
 
-        accessToken = token;
-      }
-
-      debugger;
-
-      const response = await axios.get(
-        `http://localhost:3001/api/${availability}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`
+        const response = await axios.get(
+          `http://localhost:3001/api/${availability}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            }
           }
-        }
-      );
-      dispatch(getDataSuccess(response.data, availability));
+        );
+        dispatch(getDataSuccess(response.data, availability));
+      } else {
+        const response = await axios.get(
+          `http://localhost:3001/api/${availability}`
+        );
+        dispatch(getDataSuccess(response.data, availability));
+      }
     } catch (err) {
       dispatch(getDataFailure(err, availability));
     }

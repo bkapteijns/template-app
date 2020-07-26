@@ -1,7 +1,8 @@
 require("dotenv").config();
+
+const jwtAuthz = require("express-jwt-authz");
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
-const jwtAuthz = require("express-jwt-authz");
 
 const domain = "dev-g9blhnj8.eu.auth0.com";
 
@@ -12,7 +13,9 @@ export const checkJwt = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: `https://${domain}/.well-known/jwks.json`
   }),
-  audience: "http://localhost:3001/api",
+
+  // Validate the audience and the issuer
+  audience: `https://${domain}/api/v2/`,
   issuer: `https://${domain}/`,
   algorithms: ["RS256"]
 });

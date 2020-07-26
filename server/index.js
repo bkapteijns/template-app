@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-const bodyParser = require("body-parser");
+const bodyparser = require("body-parser");
 const cors = require("cors");
 
 const { checkJwt, checkScope, checkRole } = require("./authZero");
@@ -12,7 +12,7 @@ const adminRouter = require("./routes/adminRoutes")();
 
 const app = express();
 
-app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
+app.use(cors(), bodyparser.urlencoded({ extended: true }), bodyparser.json());
 
 app.use("/api/public", publicRouter);
 app.use("/api/private", checkJwt, privateRouter);
@@ -23,4 +23,7 @@ app.get("/api", (req, res) => {
   res.send("Welcome to my api");
 });
 
-app.listen(process.env.PORT || 3001);
+app.listen(
+  process.env.PORT || 3001,
+  console.log("Server running on port 3001") // eslint-disable-line
+);
