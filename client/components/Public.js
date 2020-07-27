@@ -7,7 +7,7 @@ import { getData } from "../redux/actions/dataActions";
 
 const Public = ({ data, error, actions }) => {
   useEffect(() => {
-    if (!data) actions.getData("public");
+    if (!data) actions.getData({ availability: "public" });
   }, []);
 
   return data ? (

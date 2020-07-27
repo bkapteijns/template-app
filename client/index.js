@@ -12,7 +12,7 @@ ReactDOM.render(
     clientId="PuxEFXXtq4RzYZkHbqzi16g1akqhRQBV"
     redirectUri={window.location.origin}
     audience="https://dev-g9blhnj8.eu.auth0.com/api/v2/"
-    scope="read:current_user update:current_user_metadata"
+    scope="read:current_user update:current_user"
     useRefreshTokens
   >
     <App />

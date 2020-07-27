@@ -4,7 +4,7 @@ const AdminController = require("../controllers/adminController");
 
 function router() {
   const adminRouter = express.Router();
-  const adminController = new AdminController();
+  const adminController = AdminController();
 
   adminRouter.route("/").get(adminController.get);
 

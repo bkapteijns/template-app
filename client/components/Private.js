@@ -10,7 +10,9 @@ const Private = ({ data, error, actions }) => {
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    if (!data) actions.getData("private", getAccessTokenSilently);
+    if (!data) {
+      actions.getData({ availability: "private" }, getAccessTokenSilently);
+    }
   }, []);
 
   return data ? (

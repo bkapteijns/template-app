@@ -4,7 +4,7 @@ const PrivateController = require("../controllers/privateController");
 
 function router() {
   const privateRouter = express.Router();
-  const privateController = new PrivateController();
+  const privateController = PrivateController();
 
   privateRouter.route("/").get(privateController.get);
 

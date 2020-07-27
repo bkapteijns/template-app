@@ -7,11 +7,18 @@ const { Image } = Schemas;
 
 function router() {
   const scopedRouter = express.Router();
-  const scopedController = new ScopedController(Image);
+  const scopedController = ScopedController(Image);
 
-  scopedRouter.route("/").get(scopedController.get);
+  scopedRouter
+    .route("/")
+    .get((req, res) => res.send("Welcome to my scoped api!"));
 
-  scopedRouter.route("/images").get(scopedRouter.getImages);
+  scopedRouter
+    .route("/images")
+    .get(scopedController.getImages)
+    .post(upload.single("image"), scopedController.postImages);
+
+  scopedRouter.route("/image/:id").get(scopedController.getImageById);
 
   return scopedRouter;
 }

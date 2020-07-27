@@ -12,7 +12,6 @@ const Profile = () => {
   const [userMetadata, setUserMetadata] = useState(null);
 
   useEffect(() => {
-    console.log(user);
     const getUserMetadata = async () => {
       const domain = "dev-g9blhnj8.eu.auth0.com";
 

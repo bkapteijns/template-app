@@ -54,6 +54,9 @@ const Nav = () => {
                   <Link className="dropdown-item" to="/profile">
                     Dashboard
                   </Link>
+                  <Link className="dropdown-item" to="/images">
+                    Images
+                  </Link>
                   <Link className="dropdown-item" to="/settings">
                     Settings
                   </Link>

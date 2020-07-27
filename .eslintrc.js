@@ -25,6 +25,7 @@ module.exports = {
     "no-underscore-dangle": 0,
     "operator-linebreak": 0,
     "react/forbid-prop-types": 0,
-    "implicit-arrow-linebreak": 0
+    "implicit-arrow-linebreak": 0,
+    "linebreak-style": 0
   }
 };

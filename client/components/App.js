@@ -9,6 +9,7 @@ import Public from "./Public";
 import Private from "./Private";
 import Profile from "./Profile";
 import Settings from "./Settings";
+import Images from "./Images";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/private" render={() => <Private />} />
         <Route exact path="/profile" render={() => <Profile />} />
         <Route exact path="/settings" render={() => <Settings />} />
+        <Route exact path="/images" render={() => <Images />} />
       </BrowserRouter>
     </Provider>
   );

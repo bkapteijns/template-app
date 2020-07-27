@@ -20,7 +20,10 @@ export const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
-export const checkScope = jwtAuthz(["read:user", "update:user"]);
+export const checkScope = jwtAuthz([
+  "read:current_user",
+  "update:current_user"
+]);
 
 export const checkRole = (role) => (req, res, next) => {
   const assignedRoles = req.user["http://localhost:3000/roles"];

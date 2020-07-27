@@ -1,11 +1,9 @@
-export default class adminController {
-  constructor(user) {
-    this.user = user;
-  }
-
-  get = (req, res) => {
+function adminController() {
+  const get = (req, res) => {
     res.send("Welcome to my admin api");
   };
+
+  return { get };
 }
 
 module.exports = adminController;

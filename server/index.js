@@ -5,10 +5,10 @@ const cors = require("cors");
 
 const { checkJwt, checkScope, checkRole } = require("./authZero");
 
-const publicRouter = require("./routes/publicRoutes")();
-const privateRouter = require("./routes/privateRoutes")();
+const publicRouter = require("./routes/publicRouter")();
+const privateRouter = require("./routes/privateRouter")();
 const scopedRouter = require("./routes/scopedRouter")();
-const adminRouter = require("./routes/adminRoutes")();
+const adminRouter = require("./routes/adminRouter")();
 
 const app = express();
 
