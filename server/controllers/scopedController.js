@@ -26,7 +26,11 @@ function scopedController(Image) {
   };
 
   const postImages = (req, res) => {
-    const image = new Image({ ...req.body, filesId: req.file.id });
+    const image = new Image({
+      ...req.body,
+      filesId: req.file.id,
+      ownerId: req.user.sub.split("|")[1]
+    });
     image.save();
 
     res.status(201).json(image);

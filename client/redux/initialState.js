@@ -2,7 +2,7 @@ const initialState = {
   data: {
     publicData: null,
     privateData: null,
-    scopedData: null,
+    scopedData: [],
     imageData: [],
     errorData: { message: null }
   }

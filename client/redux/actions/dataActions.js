@@ -5,7 +5,8 @@ import {
   GET_PUBLIC_DATA_SUCCESS,
   GET_SCOPED_DATA_SUCCESS,
   GET_IMAGE_DATA_SUCCESS,
-  GET_DATA_FAILURE
+  GET_DATA_FAILURE,
+  POST_IMAGE
 } from "./actionTypes";
 
 export function getDataSuccess(payload, availability) {
@@ -37,6 +38,10 @@ export function requestData() {
   return { type: GET_DATA_REQUEST };
 }
 
+export function postImage(image) {
+  return { type: POST_IMAGE, payload: image };
+}
+
 export function getData({ availability, path }, getAccessTokenSilently) {
   return async (dispatch) => {
     dispatch(requestData());
@@ -66,21 +71,31 @@ export function getData({ availability, path }, getAccessTokenSilently) {
 export function getImages(images, getAccessTokenSilently) {
   return async (dispatch) => {
     dispatch(requestData());
-
     try {
       const accessToken = await getAccessTokenSilently({
         audience: `https://dev-g9blhnj8.eu.auth0.com/api/v2/`
       });
-      const headers = { Authorization: `Bearer ${accessToken}` };
+      const headers = {
+        Authorization: `Bearer ${accessToken}`
+      };
 
-      const response = images.map(async (image) => {
+      const response = [];
+
+      await images.forEach(async (image) => {
         const imageData = await axios.get(
-          `http://localhost:30001/api/scoped/image/${image.filesId}`,
-          { headers }
+          `http://localhost:3001/api/scoped/image/${image.filesId}`,
+          {
+            responseType: "arraybuffer",
+            headers
+          }
         );
-        return { name: image.name, data: imageData.data };
+        response.push({
+          name: image.name,
+          data: Buffer.from(imageData.data, "binary"),
+          _id: image.filesId
+        });
       });
-      dispatch(getDataSuccess(response));
+      dispatch(getDataSuccess(response, "images"));
     } catch (err) {
       dispatch(getDataFailure(err));
     }

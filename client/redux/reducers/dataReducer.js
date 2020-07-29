@@ -3,7 +3,8 @@ import {
   GET_PUBLIC_DATA_SUCCESS,
   GET_SCOPED_DATA_SUCCESS,
   GET_DATA_FAILURE,
-  GET_IMAGE_DATA_SUCCESS
+  GET_IMAGE_DATA_SUCCESS,
+  POST_IMAGE
 } from "../actions/actionTypes";
 import initialState from "../initialState";
 
@@ -19,6 +20,8 @@ export default function dataReducer(state = initialState.data, action) {
       return { ...state, imageData: action.payload };
     case GET_DATA_FAILURE:
       return { ...state, errorData: action.payload || "Error" };
+    case POST_IMAGE:
+      return { ...state, scopedData: [...state.scopedData, action.payload] };
     default:
       return state;
   }
