@@ -16,7 +16,7 @@ function router() {
   scopedRouter
     .route("/images")
     .get(scopedController.getImages)
-    .post(upload.single("image"), scopedController.postImages);
+    .post(upload.single("image"), scopedController.postImage);
 
   scopedRouter.route("/image/:id").get(scopedController.getImageById);
 

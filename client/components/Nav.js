@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Nav = () => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  // eslint-disable-next-line
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
   return (
     <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
@@ -59,6 +60,9 @@ const Nav = () => {
                   </Link>
                   <Link className="dropdown-item" to="/settings">
                     Settings
+                  </Link>
+                  <Link className="dropdown-item" to="/admin">
+                    Admin
                   </Link>
                   <div className="dropdown-divider" />
                   <button

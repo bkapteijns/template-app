@@ -3,7 +3,6 @@ const initialState = {
     publicData: null,
     privateData: null,
     scopedData: [],
-    imageData: [],
     errorData: { message: null }
   }
 };

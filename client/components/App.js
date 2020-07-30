@@ -10,6 +10,7 @@ import Private from "./Private";
 import Profile from "./Profile";
 import Settings from "./Settings";
 import Images from "./Images";
+import Admin from "./Admin";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/profile" render={() => <Profile />} />
         <Route exact path="/settings" render={() => <Settings />} />
         <Route exact path="/images" render={() => <Images />} />
+        <Route exact path="/admin" render={() => <Admin />} />
       </BrowserRouter>
     </Provider>
   );

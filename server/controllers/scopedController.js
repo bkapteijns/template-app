@@ -25,7 +25,7 @@ function scopedController(Image) {
     */
   };
 
-  const postImages = (req, res) => {
+  const postImage = (req, res) => {
     const image = new Image({
       ...req.body,
       filesId: req.file.id,
@@ -41,7 +41,7 @@ function scopedController(Image) {
     gfs.openDownloadStream(id).pipe(res);
   };
 
-  return { getImages, postImages, getImageById };
+  return { getImages, postImage, getImageById };
 }
 
 module.exports = scopedController;

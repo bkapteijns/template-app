@@ -3,7 +3,12 @@ function adminController() {
     res.send("Welcome to my admin api");
   };
 
-  return { get };
+  const postArticle = (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+  };
+
+  return { get, postArticle };
 }
 
 module.exports = adminController;

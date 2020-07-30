@@ -17,7 +17,8 @@ app.use(cors(), bodyparser.urlencoded({ extended: true }), bodyparser.json());
 app.use("/api/public", publicRouter);
 app.use("/api/private", checkJwt, privateRouter);
 app.use("/api/scoped", checkJwt, checkScope, scopedRouter);
-app.use("/api/admin", checkJwt, checkRole("admin"), adminRouter);
+// app.use("/api/admin", checkJwt, checkRole("admin"), adminRouter);
+app.use("/api/admin", adminRouter);
 
 app.get("/api", (req, res) => {
   res.send("Welcome to my api");

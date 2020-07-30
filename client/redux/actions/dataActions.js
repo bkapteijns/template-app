@@ -4,7 +4,6 @@ import {
   GET_PRIVATE_DATA_SUCCESS,
   GET_PUBLIC_DATA_SUCCESS,
   GET_SCOPED_DATA_SUCCESS,
-  GET_IMAGE_DATA_SUCCESS,
   GET_DATA_FAILURE,
   POST_IMAGE
 } from "./actionTypes";
@@ -20,9 +19,6 @@ export function getDataSuccess(payload, availability) {
       break;
     case "scoped":
       type = GET_SCOPED_DATA_SUCCESS;
-      break;
-    case "images":
-      type = GET_IMAGE_DATA_SUCCESS;
       break;
     default:
       type = GET_DATA_FAILURE;
@@ -68,6 +64,7 @@ export function getData({ availability, path }, getAccessTokenSilently) {
   };
 }
 
+// Not necessarily a redux thunk/action, but does dispatch some (currently unhandled) actions
 export function getImages(images, getAccessTokenSilently) {
   return async (dispatch) => {
     dispatch(requestData());
@@ -95,9 +92,10 @@ export function getImages(images, getAccessTokenSilently) {
           _id: image.filesId
         });
       });
-      dispatch(getDataSuccess(response, "images"));
+      return response;
     } catch (err) {
       dispatch(getDataFailure(err));
+      return [];
     }
   };
 }

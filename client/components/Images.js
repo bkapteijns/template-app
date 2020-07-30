@@ -7,17 +7,18 @@ import axios from "axios";
 
 import {
   getData,
-  getImages,
   getDataFailure,
   postImage,
   requestData
 } from "../redux/actions/dataActions";
 
 import AddImageForm from "./AddImageForm";
+import ImagesList from "./ImagesList";
 
 // eslint-disable-next-line
-const Private = ({ data, images, error, actions }) => {
+const Private = ({ data, error, actions }) => {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [images, setImages] = useState([]);
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -31,9 +32,38 @@ const Private = ({ data, images, error, actions }) => {
   }, []);
 
   useEffect(() => {
-    if (images.length < data.length) {
-      actions.getImages(data, getAccessTokenSilently);
+    async function getImages() {
+      actions.requestData();
+      try {
+        const accessToken = await getAccessTokenSilently({
+          audience: `https://dev-g9blhnj8.eu.auth0.com/api/v2/`
+        });
+        const headers = {
+          Authorization: `Bearer ${accessToken}`
+        };
+
+        const response = [];
+
+        await data.forEach(async (image) => {
+          const imageData = await axios.get(
+            `http://localhost:3001/api/scoped/image/${image.filesId}`,
+            {
+              responseType: "arraybuffer",
+              headers
+            }
+          );
+          response.push({
+            name: image.name,
+            data: Buffer.from(imageData.data, "binary"),
+            _id: image.filesId
+          });
+        });
+        setImages(response);
+      } catch (err) {
+        actions.throwError(err);
+      }
     }
+    getImages();
   }, [data]);
 
   const arrayBufferToBase64 = (buffer) => {
@@ -44,6 +74,7 @@ const Private = ({ data, images, error, actions }) => {
     return btoa(stringChars);
   };
 
+  // Put this into redux! (onAddImage = actions.addImage())
   const onAddImage = async ({ name, image }) => {
     actions.requestData();
     try {
@@ -88,21 +119,7 @@ const Private = ({ data, images, error, actions }) => {
       {
         // You need to open the page again to see the images pop up
       }
-      {images.length !== 0 ? (
-        images.map((image) => (
-          <div key={image._id}>
-            <h2>{image.name}</h2>
-            <img
-              style={{ height: 100, minWidth: 10 }}
-              src={`data:image/jpg;base64,${arrayBufferToBase64(image.data)}`}
-              alt=""
-            />
-          </div>
-        ))
-      ) : (
-        <div>Loading...</div>
-      )}
-
+      <ImagesList images={images} arrayBufferToBase64={arrayBufferToBase64} />
       {showAddForm ? (
         <AddImageForm onSubmit={onAddImage} onCancel={onCancelAddImage} />
       ) : (
@@ -121,22 +138,19 @@ const Private = ({ data, images, error, actions }) => {
 };
 
 Private.propTypes = {
-  data: PropTypes.any,
-  images: PropTypes.array,
+  data: PropTypes.array,
   error: PropTypes.any,
   actions: PropTypes.object.isRequired
 };
 
 Private.defaultProps = {
   data: [],
-  images: [],
   error: { message: "Error" }
 };
 
 function mapStateToProps(state) {
   return {
     data: state.data.scopedData,
-    images: state.data.imageData,
     error: state.data.errorData
   };
 }
@@ -145,7 +159,6 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       getData: bindActionCreators(getData, dispatch),
-      getImages: bindActionCreators(getImages, dispatch),
       throwError: (err) => dispatch(getDataFailure(err)),
       postImage: (image) => dispatch(postImage(image)),
       requestData: () => dispatch(requestData())

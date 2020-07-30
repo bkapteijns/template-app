@@ -27,7 +27,12 @@ const AddImageForm = ({ onSubmit, onCancel }) => {
       <br />
       Choose an image:
       <br />
-      <input type="file" name="file1" onChange={handleImageChange} />
+      <input
+        type="file"
+        name="file1"
+        accept=".jpg, .jpeg, .png"
+        onChange={handleImageChange}
+      />
       <br />
       <input type="submit" value="Upload image" />
       <button
