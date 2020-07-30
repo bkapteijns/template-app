@@ -4,6 +4,7 @@ import {
   GET_PRIVATE_DATA_SUCCESS,
   GET_PUBLIC_DATA_SUCCESS,
   GET_SCOPED_DATA_SUCCESS,
+  GET_ADMIN_DATA_SUCCESS,
   GET_DATA_FAILURE,
   POST_IMAGE
 } from "./actionTypes";
@@ -19,6 +20,9 @@ export function getDataSuccess(payload, availability) {
       break;
     case "scoped":
       type = GET_SCOPED_DATA_SUCCESS;
+      break;
+    case "admin":
+      type = GET_ADMIN_DATA_SUCCESS;
       break;
     default:
       type = GET_DATA_FAILURE;

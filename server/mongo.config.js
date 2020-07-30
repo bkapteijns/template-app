@@ -4,6 +4,7 @@ const GridFsStorage = require("multer-gridfs-storage");
 
 const Article = require("./models/articleModel");
 const Image = require("./models/imageModel");
+const Paragraph = require("./models/paragraphModel");
 
 // mongoose.Promise = global.Promise;
 
@@ -22,7 +23,7 @@ export const db = mongoose.connect("mongodb://127.0.0.1:27017/template-app", {
 });
 
 /** Bundling the mongoose schema's */
-export const Schemas = { Article, Image };
+export const Schemas = { Article, Image, Paragraph };
 
 /** Storing files */
 const storage = new GridFsStorage({
