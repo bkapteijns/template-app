@@ -21,7 +21,10 @@ function adminController(Article, Image, Paragraph) {
   };
 
   const postArticle = (req, res) => {
-    const article = new Article({ ...req.body });
+    const article = new Article({
+      ...req.body,
+      authorId: req.user.sub.split("|")[1]
+    });
     article.save();
 
     res.json(article);
