@@ -10,7 +10,7 @@ function adminController(Article, Image, Paragraph) {
     });
     image.save();
 
-    res.status(201).send(image.filesId);
+    res.status(201).send(image._id);
   };
 
   const postParagraph = (req, res) => {
