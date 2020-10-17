@@ -1,23 +1,30 @@
 const express = require("express");
 
-const { Schemas, upload } = require("../mongo.config");
+const { articleUpload, Schemas } = require("../mongo.config");
 const AdminController = require("../controllers/adminController");
 
-const { Article, Image, Paragraph } = Schemas;
+const { Article } = Schemas;
 
 function router() {
   const adminRouter = express.Router();
-  const adminController = AdminController(Article, Image, Paragraph);
+  const adminController = AdminController(Article);
 
   adminRouter.route("/").get(adminController.get);
 
   adminRouter
     .route("/images")
-    .post(upload.single("image"), adminController.postImage);
+    .post(articleUpload.single("image"), adminController.postElement);
 
-  adminRouter.route("/paragraphs").post(adminController.postParagraph);
+  adminRouter
+    .route("/paragraphs")
+    .post(articleUpload.single("paragraph"), adminController.postElement);
 
-  adminRouter.route("/articles").post(adminController.postArticle);
+  adminRouter
+    .route("/articles")
+    .get(adminController.getArticles)
+    .post(adminController.postArticle);
+
+  adminRouter.route("/article/:id").get(adminController.getArticleById);
 
   return adminRouter;
 }

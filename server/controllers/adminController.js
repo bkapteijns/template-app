@@ -1,37 +1,45 @@
-function adminController(Article, Image, Paragraph) {
+const { ObjectId } = require("mongodb");
+
+function adminController(Article) {
   const get = (req, res) => {
-    res.send("Welcome to my admin api");
+    res.status(200).send("Welcome to my admin api");
   };
 
-  const postImage = (req, res) => {
-    const image = new Image({
-      ...req.body,
-      filesId: req.file.id
-    });
-    image.save();
-
-    res.status(201).send(image._id);
-  };
-
-  const postParagraph = (req, res) => {
-    const paragraph = new Paragraph({ ...req.body });
-    paragraph.save();
-
-    res.status(201).send(paragraph._id);
+  const postElement = (req, res) => {
+    res.status(201).send(req.file._id);
   };
 
   const postArticle = (req, res) => {
     const article = new Article({
       ...req.body,
-      authorId: req.user.sub.split("|")[1]
+      authorId: "0"
     });
     article.save();
-
-    res.json(article);
+    res.status(201).json(article);
   };
 
-  // eslint-disable-next-line
-  return { get, postImage, postParagraph, postArticle };
+  const getArticles = (req, res) => {
+    Article.find((err, articles) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send(articles);
+    });
+  };
+
+  const getArticleById = (req, res) => {
+    const articleId = ObjectId(req.params.id);
+    Article.findById(articleId, (err, article) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send(article);
+    });
+  };
+
+  return {
+    get,
+    postElement,
+    postArticle,
+    getArticles,
+    getArticleById
+  };
 }
 
 module.exports = adminController;

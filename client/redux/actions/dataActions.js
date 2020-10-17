@@ -6,12 +6,7 @@ import {
   GET_SCOPED_DATA_SUCCESS,
   GET_ADMIN_DATA_SUCCESS,
   GET_DATA_FAILURE,
-  POST_IMAGE,
-  CLEAR_PRIVATE_DATA,
-  CLEAR_DATA_FAILURE,
-  CLEAR_PUBLIC_DATA,
-  CLEAR_SCOPED_DATA,
-  CLEAR_ADMIN_DATA
+  POST_IMAGE
 } from "./actionTypes";
 
 export function getDataSuccess(payload, availability) {
@@ -45,21 +40,6 @@ export function requestData() {
 
 export function postImage(image) {
   return { type: POST_IMAGE, payload: image };
-}
-
-export function clearData(availability) {
-  switch (availability) {
-    case "private":
-      return { type: CLEAR_PRIVATE_DATA };
-    case "public":
-      return { type: CLEAR_PUBLIC_DATA };
-    case "scoped":
-      return { type: CLEAR_SCOPED_DATA };
-    case "admin":
-      return { type: CLEAR_ADMIN_DATA };
-    default:
-      return { type: CLEAR_DATA_FAILURE };
-  }
 }
 
 export function getData({ availability, path }, getAccessTokenSilently) {

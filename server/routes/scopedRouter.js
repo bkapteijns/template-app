@@ -13,6 +13,7 @@ function router() {
     .route("/")
     .get((req, res) => res.send("Welcome to my scoped api!"));
 
+  /* 'image' in upload.single means get it from req.body.image */
   scopedRouter
     .route("/images")
     .get(scopedController.getImages)

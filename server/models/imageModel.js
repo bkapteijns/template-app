@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const imageModel = new Schema({
-  ownerId: { type: String, required: false },
+  ownerId: { type: String, required: true },
   name: { type: String, required: true },
   filesId: { type: String, required: true }
 });

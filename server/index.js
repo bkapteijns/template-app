@@ -3,7 +3,7 @@ require("dotenv").config();
 const bodyparser = require("body-parser");
 const cors = require("cors");
 
-const { checkJwt, checkScope, checkRole } = require("./authZero");
+const { checkJwt, checkScope /* , checkRole */ } = require("./authZero");
 
 const publicRouter = require("./routes/publicRouter")();
 const privateRouter = require("./routes/privateRouter")();
